@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Library.Repository_Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,12 @@ namespace Store.WebApp.Controllers
 {
     public class CustomerController : Controller
     {
+        private readonly ICustomerRepository _repository;
+
+        public CustomerController(ICustomerRepository repository)
+        {
+            _repository = repository;
+        }
         // GET: Customer
         public ActionResult Index()
         {

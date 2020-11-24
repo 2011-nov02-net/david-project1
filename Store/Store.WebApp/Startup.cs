@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Store.DataModel;
+using Library.Repository_Interfaces;
+using Store.DataModel.Repositories;
 
 namespace Store.WebApp
 {
@@ -27,6 +29,8 @@ namespace Store.WebApp
         {
             //db set up
             services.AddDbContext<Project0Context>(options => options.UseSqlServer(Configuration.GetConnectionString("Project0Connection")));
+            // repositories set up
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddControllersWithViews();
         }
 
