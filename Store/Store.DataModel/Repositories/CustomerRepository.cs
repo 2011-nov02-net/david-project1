@@ -23,7 +23,9 @@ namespace Store.DataModel.Repositories
 
         public Library.Customer Get(int id)
         {
-            throw new NotImplementedException();
+            var dbCustomer = _context.Customers.FirstOrDefault(c => c.Id == id);
+
+            return new Library.Customer(dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.Id);
         }
 
         public IEnumerable<Library.Customer> GetAll()

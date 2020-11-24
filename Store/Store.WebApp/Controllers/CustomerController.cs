@@ -26,7 +26,8 @@ namespace Store.WebApp.Controllers
         // GET: Customer/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var customer = _repository.Get(id);
+            return View(customer);
         }
 
         // GET: Customer/Create
