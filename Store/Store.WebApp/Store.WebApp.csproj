@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>2202e1d8-fdc8-4b98-89cd-bb47daed1b95</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj" />
     <ProjectReference Include="..\Store.DataModel\Store.DataModel.csproj" />
   </ItemGroup>
 
