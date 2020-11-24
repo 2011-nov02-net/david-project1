@@ -18,14 +18,17 @@ namespace Store.DataModel.Repositories
 
         public void Create(Library.Customer customer)
         {
-            throw new NotImplementedException();
+            var cust = new Customer() { FirstName = customer.FirstName, LastName = customer.LastName };
+
+            _context.Add(cust);
+            _context.SaveChanges();
         }
 
         public Library.Customer Get(int id)
         {
             var dbCustomer = _context.Customers.FirstOrDefault(c => c.Id == id);
 
-            return new Library.Customer(dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.Id);
+            return new Library.Customer(dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.Id) ?? null;
         }
 
         public IEnumerable<Library.Customer> GetAll()
@@ -37,7 +40,13 @@ namespace Store.DataModel.Repositories
 
         public void Update(Library.Customer customer)
         {
-            throw new NotImplementedException();
+            // get customer from db
+            var dbCust = _context.Customers.First(c => c.Id == customer.Id);
+            // update names
+            dbCust.FirstName = customer.FirstName;
+            dbCust.LastName = customer.LastName;
+            // save changes
+            _context.SaveChanges();
         }
     }
 }
