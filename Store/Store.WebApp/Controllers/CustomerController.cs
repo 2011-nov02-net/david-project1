@@ -19,7 +19,8 @@ namespace Store.WebApp.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            return View();
+            var customers = _repository.GetAll();
+            return View(customers);
         }
 
         // GET: Customer/Details/5
