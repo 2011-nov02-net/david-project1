@@ -84,7 +84,7 @@ namespace Store.WebApp.Controllers
         public ActionResult Edit(int id, [Bind("FirstName,LastName,Id")] CustomerViewModel viewCustomer, IFormCollection collection)
         {
             // get the current id from tempdata to ensure the user hasn't modified the id that the page put out
-            int tdId = (int)TempData["Customer"];
+            int tdId = (int)TempData.Peek("Customer");
             if(tdId != id && tdId != viewCustomer.Id)
             {
                 // *ER add error message
