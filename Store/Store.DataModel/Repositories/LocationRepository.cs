@@ -16,12 +16,17 @@ namespace Store.DataModel.Repositories
         }
         public void Create(Library.Location location)
         {
-            throw new NotImplementedException();
+            var loc = new Location() { Name = location.Name };
+
+            _context.Add(loc);
+            _context.SaveChanges();
         }
 
         public Library.Location Get(int id)
         {
-            throw new NotImplementedException();
+            var dbLocation = _context.Locations.FirstOrDefault(l => l.Id == id);
+
+            return new Library.Location(dbLocation.Name, dbLocation.Id) ?? null;
         }
 
         public IEnumerable<Library.Location> GetAll()
@@ -33,7 +38,13 @@ namespace Store.DataModel.Repositories
 
         public void Update(Library.Location location)
         {
-            throw new NotImplementedException();
+            // get the location from db
+            var dbLoc = _context.Locations.First(l => l.Id == location.Id);
+
+            // update name
+            dbLoc.Name = location.Name;
+            // save changes
+            _context.SaveChanges();
         }
     }
 }

@@ -17,26 +17,26 @@ namespace Store.WebApp.Controllers
             _locationRepository = repository;
         }
 
-        // GET: LocationController
+        // GET: Location
         public ActionResult Index()
         {
             var locations = _locationRepository.GetAll();
             return View(locations);
         }
 
-        // GET: LocationController/Details/5
+        // GET: Location/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: LocationController/Create
+        // GET: Location/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: LocationController/Create
+        // POST: Location/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -51,37 +51,16 @@ namespace Store.WebApp.Controllers
             }
         }
 
-        // GET: LocationController/Edit/5
+        // GET: Location/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: LocationController/Edit/5
+        // POST: Location/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LocationController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LocationController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
