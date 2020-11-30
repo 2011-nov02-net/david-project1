@@ -1,6 +1,7 @@
 ﻿using Library.Repository_Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Store.Library.Repository_Interfaces;
 using Store.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,24 +12,43 @@ namespace Store.WebApp.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ICustomerRepository _repository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public CustomersController(ICustomerRepository repository)
+        public CustomersController(ICustomerRepository customerRepository, IOrderRepository orderRepository)
         {
-            _repository = repository;
+            _customerRepository = customerRepository;
+            _orderRepository = orderRepository;
         }
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = _repository.GetAll();
+            var customers = _customerRepository.GetAll();
             return View(customers);
         }
 
         // GET: Customers/Details/5
         public ActionResult Details(int id)
         {
-            var customer = _repository.Get(id);
-            return View(customer);
+            var customer = _customerRepository.Get(id);
+            var orders = _orderRepository.Get(id);
+            // make the view model
+            //convert all the orders to a orderViewModel
+            var orderVM = orders.Select(o => new OrderViewModel() 
+            {
+                LocationId = o.LocationId,
+                Date = o.Date,
+                OrderTotal = o.OrderTotal,
+                OrderNumber = o.OrderNumber
+            }).ToList();
+            var customerWithOrderDetail = new CustomerWithOrderViewModel()
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Id = customer.Id,
+                Orders = orderVM
+            };
+            return View(customerWithOrderDetail);
         }
 
         // GET: Customers/Create
@@ -53,7 +73,7 @@ namespace Store.WebApp.Controllers
                 // give the id as 1 just to get it into the system
                 // the create repo does not use that id to form a new DB entry
                 var customer = new Library.Customer(viewCustomer.FirstName, viewCustomer.LastName, 1);
-                _repository.Create(customer);
+                _customerRepository.Create(customer);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -68,7 +88,7 @@ namespace Store.WebApp.Controllers
         {
             // add which customer we are currently adding to tempdata to be able to check with after the fact
             TempData["Customer"] = id;
-            var customer = _repository.Get(id);
+            var customer = _customerRepository.Get(id);
             var viewCustomer = new CustomerViewModel()
             {
                 FirstName = customer.FirstName,
@@ -100,7 +120,7 @@ namespace Store.WebApp.Controllers
             try
             {
                 var customer = new Library.Customer(viewCustomer.FirstName, viewCustomer.LastName, viewCustomer.Id);
-                _repository.Update(customer);
+                _customerRepository.Update(customer);
                 return RedirectToAction(nameof(Index));
             }
             catch

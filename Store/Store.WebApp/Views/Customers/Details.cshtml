@@ -1,4 +1,4 @@
-﻿@model Store.Library.Customer
+﻿@model Store.WebApp.ViewModels.CustomerWithOrderViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -29,6 +29,50 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
     </dl>
+</div>
+<div>
+@if (Model.Orders.Count > 0)
+{
+    <h5>Orders placed:</h5>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Order Number
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Order Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+@foreach (var order in Model.Orders)
+{
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => order.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.LocationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.OrderTotal)
+                </td>
+            </tr>
+}
+        </tbody>
+    </table>
+}
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
