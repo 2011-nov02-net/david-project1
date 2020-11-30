@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Store.Library.Repository_Interfaces;
+using Store.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,70 +11,49 @@ namespace Store.WebApp.Controllers
 {
     public class OrdersController : Controller
     {
-        // GET: OrdersController
-        public ActionResult Index()
+        private readonly IOrderRepository _orderRepository;
+
+        public OrdersController(IOrderRepository orderRepository)
         {
-            return View();
+            _orderRepository = orderRepository;
         }
 
-        // GET: OrdersController/Details/5
+        // GET: Orders/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var orders = _orderRepository.GetOrderByOrderNumber(id);
+            // convert the Library Sales to sales view model
+            var salesVM = orders.SalesList.Select(s => new SaleViewModel() 
+            { 
+                ProductName = s.ProductName,
+                PurchasePrice = s.PurchasePrice,
+                Quantity = s.SaleQuantity
+            }).ToList();
+
+            // create view model
+            var orderVM = new OrderViewModel() 
+            {
+                CustomerId = orders.CustomerId,
+                LocationId = orders.LocationId,
+                Date = orders.Date,
+                OrderNumber = orders.OrderNumber,
+                OrderTotal = orders.OrderTotal,
+                Sales = salesVM
+            };
+
+            return View(orderVM);
         }
 
-        // GET: OrdersController/Create
+        // GET: Orders/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: OrdersController/Create
+        // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrdersController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: OrdersController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrdersController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: OrdersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

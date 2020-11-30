@@ -10,8 +10,11 @@ namespace Store.WebApp.ViewModels
     {
         [Display(Name = "Location")]
         public int LocationId { get; set; }
+        [Display(Name = "Customer")]
+        public int CustomerId { get; set; }
         public DateTime Date { get; set; }
         public decimal OrderTotal { get; set; }
         public int OrderNumber { get; set; }
+        public List<SaleViewModel> Sales { get; set; }
     }
 }

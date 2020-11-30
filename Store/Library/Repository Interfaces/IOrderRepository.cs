@@ -8,5 +8,7 @@ namespace Store.Library.Repository_Interfaces
     {
         IEnumerable<Order> Get(int id);
         void Create(Customer customer, List<Sale> sales);
+
+        Order GetOrderByOrderNumber(int OrderNumber);
     }
 }
