@@ -9,35 +9,35 @@ using System.Threading.Tasks;
 
 namespace Store.WebApp.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomersController : Controller
     {
         private readonly ICustomerRepository _repository;
 
-        public CustomerController(ICustomerRepository repository)
+        public CustomersController(ICustomerRepository repository)
         {
             _repository = repository;
         }
-        // GET: Customer
+        // GET: Customers
         public ActionResult Index()
         {
             var customers = _repository.GetAll();
             return View(customers);
         }
 
-        // GET: Customer/Details/5
+        // GET: Customers/Details/5
         public ActionResult Details(int id)
         {
             var customer = _repository.Get(id);
             return View(customer);
         }
 
-        // GET: Customer/Create
+        // GET: Customers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("FirstName,LastName")] CustomerViewModel viewCustomer, IFormCollection collection)
@@ -63,7 +63,7 @@ namespace Store.WebApp.Controllers
             }
         }
 
-        // GET: Customer/Edit/5
+        // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
             // add which customer we are currently adding to tempdata to be able to check with after the fact
@@ -78,7 +78,7 @@ namespace Store.WebApp.Controllers
             return View(viewCustomer);
         }
 
-        // POST: Customer/Edit/5
+        // POST: Customers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind("FirstName,LastName,Id")] CustomerViewModel viewCustomer, IFormCollection collection)

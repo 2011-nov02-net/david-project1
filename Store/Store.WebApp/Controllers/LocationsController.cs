@@ -9,36 +9,36 @@ using Store.WebApp.ViewModels;
 
 namespace Store.WebApp.Controllers
 {
-    public class LocationController : Controller
+    public class LocationsController : Controller
     {
         private readonly ILocationRepository _locationRepository;
 
-        public LocationController(ILocationRepository repository)
+        public LocationsController(ILocationRepository repository)
         {
             _locationRepository = repository;
         }
 
-        // GET: Location
+        // GET: Locations
         public ActionResult Index()
         {
             var locations = _locationRepository.GetAll();
             return View(locations);
         }
 
-        // GET: Location/Details/5
+        // GET: Locations/Details/5
         public ActionResult Details(int id)
         {
             var location = _locationRepository.Get(id);
             return View(location);
         }
 
-        // GET: Location/Create
+        // GET: Locations/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Location/Create
+        // POST: Locations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Name")] LocationViewModel viewLocation, IFormCollection collection)
@@ -63,7 +63,7 @@ namespace Store.WebApp.Controllers
             }
         }
 
-        // GET: Location/Edit/5
+        // GET: Locations/Edit/5
         public ActionResult Edit(int id)
         {
             // add the id to temp data for security
@@ -75,7 +75,7 @@ namespace Store.WebApp.Controllers
             return View(viewLocation);
         }
 
-        // POST: Location/Edit/5
+        // POST: Locations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind ("Name, Id")] LocationViewModel viewLocation, IFormCollection collection)
