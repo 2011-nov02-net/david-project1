@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.Library.Repository_Interfaces;
 using Store.WebApp.ViewModels;
+using Store.WebApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,7 @@ namespace Store.WebApp.Controllers
             var orders = _orderRepository.GetByCustomerId(id);
             // make the view model
             //convert all the orders to a orderViewModel
-            var orderVM = orders.Select(o => new OrderViewModel() 
-            {
-                LocationId = o.LocationId,
-                Date = o.Date,
-                OrderTotal = o.OrderTotal,
-                OrderNumber = o.OrderNumber
-            }).ToList();
+            var orderVM = Helpers.Helpers.ConvertOrdersToViewModel(orders);
             var customerWithOrderDetail = new CustomerWithOrderViewModel()
             {
                 FirstName = customer.FirstName,
