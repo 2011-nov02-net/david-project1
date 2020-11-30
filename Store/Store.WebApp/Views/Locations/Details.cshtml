@@ -1,4 +1,4 @@
-﻿@model Store.Library.Location
+﻿@model Store.WebApp.ViewModels.LocationWithOrderViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -17,14 +17,61 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.LocationId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.LocationId)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+@if(Model.Orders.Count >0)
+{
+    <h5>Orders from this location:</h5>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Orders.First().OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Orders.First().CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Orders.First().Date)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Orders.First().OrderTotal)
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+@foreach (var order in Model.Orders)
+{
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => order.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.OrderTotal)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Orders", new { id = order.OrderNumber })
+                </td>
+            </tr>
+}
+        </tbody>
+    </table>
+}
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LocationId }) |
     <a asp-action="Index">Back to List</a>
 </div>

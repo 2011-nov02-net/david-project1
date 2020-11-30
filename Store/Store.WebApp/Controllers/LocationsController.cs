@@ -12,10 +12,12 @@ namespace Store.WebApp.Controllers
     public class LocationsController : Controller
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public LocationsController(ILocationRepository repository)
+        public LocationsController(ILocationRepository locationRepository, IOrderRepository orderRepository)
         {
-            _locationRepository = repository;
+            _locationRepository = locationRepository;
+            _orderRepository = orderRepository;
         }
 
         // GET: Locations
@@ -29,7 +31,18 @@ namespace Store.WebApp.Controllers
         public ActionResult Details(int id)
         {
             var location = _locationRepository.Get(id);
-            return View(location);
+            var orders = _orderRepository.GetByLocationId(id);
+            // convert all the orders to a orderViewModel
+            var orderVM = Helpers.Helpers.ConvertOrdersToViewModel(orders);
+
+            // make the view model
+            var locationWithOrderDetail = new LocationWithOrderViewModel()
+            {
+                Name = location.Name,
+                LocationId = location.Id,
+                Orders = orderVM
+            };
+            return View(locationWithOrderDetail);
         }
 
         // GET: Locations/Create
