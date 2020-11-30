@@ -39,16 +39,16 @@
         <thead>
             <tr>
                 <th>
-                    Order Number
+                    @Html.DisplayNameFor(model => model.Orders.First().OrderNumber)
                 </th>
                 <th>
-                    Location
+                    @Html.DisplayNameFor(model => model.Orders.First().LocationId)
                 </th>
                 <th>
-                    Date
+                    @Html.DisplayNameFor(model => model.Orders.First().Date)
                 </th>
                 <th>
-                    Order Total
+                    @Html.DisplayNameFor(model => model.Orders.First().OrderTotal)
                 </th>
             </tr>
         </thead>
@@ -67,6 +67,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => order.OrderTotal)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Orders", new { id = order.})
                 </td>
             </tr>
 }
