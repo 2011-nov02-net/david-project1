@@ -31,7 +31,7 @@ namespace Store.WebApp.Controllers
         public ActionResult Details(int id)
         {
             var customer = _customerRepository.Get(id);
-            var orders = _orderRepository.Get(id);
+            var orders = _orderRepository.GetByCustomerId(id);
             // make the view model
             //convert all the orders to a orderViewModel
             var orderVM = orders.Select(o => new OrderViewModel() 

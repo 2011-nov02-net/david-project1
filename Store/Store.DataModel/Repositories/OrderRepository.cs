@@ -21,9 +21,16 @@ namespace Store.DataModel.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Library.Order> Get(int id)
+        public IEnumerable<Library.Order> GetByCustomerId(int id)
         {
             var dbOrders = _context.Orders.Where(o => o.CustomerId == id).ToList();
+
+            return dbOrders.Select(o => new Library.Order(o.CustomerId, o.LocationId, o.Date, o.OrderNumber, o.OrderTotal));
+        }
+
+        public IEnumerable<Library.Order> GetByLocationId(int id)
+        {
+            var dbOrders = _context.Orders.Where(o => o.LocationId == id).ToList();
 
             return dbOrders.Select(o => new Library.Order(o.CustomerId, o.LocationId, o.Date, o.OrderNumber, o.OrderTotal));
         }
