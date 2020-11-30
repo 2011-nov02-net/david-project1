@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Store.WebApp.ViewModels
 {
-    public class LocationWithOrderViewModel
+    public class LocationWithOrderAndInventoryViewModel
     {
         [Required, RegularExpression("[A-Z].*")]
         public string Name { get; set; }
         public int LocationId { get; set; }
         public List<OrderViewModel> Orders { get; set; }
+        public List<InventoryViewModel> Inventory { get; set; }
     }
 }

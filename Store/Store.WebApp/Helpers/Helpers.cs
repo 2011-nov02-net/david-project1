@@ -20,5 +20,18 @@ namespace Store.WebApp.Helpers
                 OrderNumber = o.OrderNumber
             }).ToList();
         }
+
+        internal static List<InventoryViewModel> ConvertInventoryToViewModel(ICollection<Inventory> locationInventory)
+        {
+            return locationInventory.Select(i => new InventoryViewModel()
+            {
+                Name = i.ProductObj.Name,
+                Description = i.ProductObj.Description,
+                Id = i.ProductObj.Id,
+                Price = i.ProductObj.Price,
+                OrderLimit = i.ProductObj.OrderLimit,
+                Quantity = i.Quantity
+            }).ToList();
+        }
     }
 }

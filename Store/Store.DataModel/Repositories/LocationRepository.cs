@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Store.Library.Repository_Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Store.DataModel.Repositories
 {
@@ -34,6 +35,20 @@ namespace Store.DataModel.Repositories
             var dbLocations = _context.Locations.ToList();
 
             return dbLocations.Select(l => new Library.Location(l.Name, l.Id));
+        }
+
+        public Library.Location GetWithInventory(int id)
+        {
+            var dbLocation = _context.Locations.Include(l => l.Inventories).ThenInclude(i => i.Product).FirstOrDefault(l => l.Id == id);
+            // convert Inventories to Library model
+            var inventory = new List<Library.Inventory>();
+            foreach(var item in dbLocation.Inventories)
+            {
+                var product = new Library.Product(item.Product.Name, item.Product.Id, item.Product.Price, item.Product.Description, item.Product.OrderLimit);
+                inventory.Add(new Library.Inventory(product, item.Quantity));
+            }
+
+            return new Library.Location(dbLocation.Name, dbLocation.Id, inventory) ?? null;
         }
 
         public void Update(Library.Location location)

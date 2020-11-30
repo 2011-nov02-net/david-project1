@@ -55,6 +55,13 @@ namespace Store.Library
             this.LocationInventory = new List<Inventory>();
         }
 
+        public Location(string name, int id, ICollection<Inventory> locationInventory)
+        {
+            this.Name = name;
+            this.Id = id;
+            this.LocationInventory = locationInventory;
+        }
+
         /// <summary>
         /// Override of ToString method
         /// </summary>
