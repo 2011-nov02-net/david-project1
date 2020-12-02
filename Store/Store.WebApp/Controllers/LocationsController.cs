@@ -48,6 +48,18 @@ namespace Store.WebApp.Controllers
             return View(locationWithOrderAndInventoryDetail);
         }
 
+        // GET: Locations/Select/5
+        public ActionResult Select(int id)
+        {
+            // get location
+            var location = _locationRepository.Get(id);
+            // store the location name and id in Temp data
+            TempData["LocationName"] = location.Name;
+            TempData["LocationId"] = location.Id;
+            // return to index view
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Locations/Create
         public ActionResult Create()
         {
