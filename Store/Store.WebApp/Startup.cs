@@ -33,6 +33,7 @@ namespace Store.WebApp
             // repositories set up
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddControllersWithViews();
         }
