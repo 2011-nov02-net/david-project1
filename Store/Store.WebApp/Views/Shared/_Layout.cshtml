@@ -29,6 +29,8 @@
                         </li>
                     </ul>
                     <span class="navbar-text">@(TempData.Peek("LocationName") ?? "No Location Selected")</span>
+                    <span class="navbar-text"> | </span>
+                    <span class="navbar-text">@(TempData.Peek("CustomerName") ?? "No Customer Selected")</span>
                 </div>
             </div>
         </nav>
