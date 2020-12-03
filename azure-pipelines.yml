@@ -1,4 +1,4 @@
-# ASP.NET Core
+
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
@@ -10,6 +10,7 @@ trigger:
   paths:
     include:
       - Store
+      - azure-pipelines.yml
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -28,3 +29,20 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
   workingDirectory: Store/
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration)'
+    publishTestResults: true
+    workingDirectory: 'Store'
+
+  
+# ASP.NET Core
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
+#     appType: 'webApp'
+#     WebAppName: 'Barnes-2011-ASPNET-Project1'
+#     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
