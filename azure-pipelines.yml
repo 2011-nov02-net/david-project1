@@ -38,12 +38,16 @@ steps:
     publishTestResults: true
     workingDirectory: 'Store'
 
-  
+- script: dotnet publish --configuration $(buildConfiguration) --output publish
+  displayName: 'dotnet publish $(buildConfiguration)'
+  workingDirectory: Store/
+
 # ASP.NET Core
-# - task: AzureRmWebAppDeployment@4
-#   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
-#     appType: 'webApp'
-#     WebAppName: 'Barnes-2011-ASPNET-Project1'
-#     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+- task: AzureRmWebAppDeployment@4
+  displayName: Azure App Service Deploy
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
+    appType: 'webApp'
+    WebAppName: 'Barnes-2011-ASPNET-Project1'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/Store/publish'
