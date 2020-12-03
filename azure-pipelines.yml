@@ -96,4 +96,4 @@ stages:
               azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
               appType: 'webApp'
               WebAppName: 'Barnes-2011-ASPNET-Project1'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/Store/publish'
+              packageForLinux: '$(System.ArtifactsDirectory)/app'
