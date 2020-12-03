@@ -7,7 +7,7 @@ namespace Store.Library
     public class Inventory
     {
         // backing field for "ProductId"
-        private int _productId;
+        // private int _productId;
         // backing field for "Quantity"'
         private int _quantity;
 
