@@ -72,14 +72,27 @@ stages:
     - script: dotnet publish --configuration $(buildConfiguration) --output publish
       displayName: 'dotnet publish $(buildConfiguration)'
       workingDirectory: Store/
+      
+    - publish: Store/publish
+      artifact: app
 
-    # ASP.NET Core
-    - task: AzureRmWebAppDeployment@4
-      displayName: Azure App Service Deploy
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
-        appType: 'webApp'
-        WebAppName: 'Barnes-2011-ASPNET-Project1'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/Store/publish'
+- stage: release
+  jobs:
+  - deployment: app-service
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: app
+            displayName: download app
+
+          - task: AzureRmWebAppDeployment@4
+            displayName: Azure App Service Deploy
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription 1 (b039e9a7-436a-45e5-9c21-b3c078fecd2c)'
+              appType: 'webApp'
+              WebAppName: 'Barnes-2011-ASPNET-Project1'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/Store/publish'
