@@ -47,6 +47,12 @@ namespace Store.WebApp.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
+            // ensure that we actually have both location and customer created
+            if(TempData.Peek("LocationId") == null && TempData.Peek("CustomerId") == null)
+            {
+                ModelState.AddModelError("Invalid Location or Customer", "Need both a location and customer to be selected");
+                return RedirectToAction(nameof(Index), "Home");
+            }
             return View();
         }
 
