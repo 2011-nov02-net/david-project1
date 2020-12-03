@@ -31,6 +31,7 @@ steps:
   workingDirectory: Store/
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
   inputs:
     command: 'test'
     arguments: '--configuration $(buildConfiguration)'
