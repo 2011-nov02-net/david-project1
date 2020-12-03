@@ -27,10 +27,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Locations" asp-action="Index">Locations</a>
                         </li>
+                        @if (TempData.Peek("LocationId") != null && TempData.Peek("CustomerId") != null)
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Create">Create Order</a>
+                        </li>
+                        }
                     </ul>
-                    <span class="navbar-text">@(TempData.Peek("LocationName") ?? "No Location Selected")</span>
-                    <span class="navbar-text"> | </span>
-                    <span class="navbar-text">@(TempData.Peek("CustomerName") ?? "No Customer Selected")</span>
+                    <span class="navbar-text">@(TempData.Peek("LocationName") ?? "No Location Selected") |</span>
+                    <span class="navbar-text"> @(TempData.Peek("CustomerName") ?? "No Customer Selected")</span>
                 </div>
             </div>
         </nav>
