@@ -33,5 +33,16 @@ namespace Store.WebApp.Helpers
                 Quantity = i.Quantity
             }).ToList();
         }
+
+        internal static LocationWithOrderAndInventoryViewModel ConvertLocationToViewModel(Location location, ICollection<Inventory> inventory, IEnumerable<Order> orders)
+        {
+            return new LocationWithOrderAndInventoryViewModel()
+            {
+                Name = location.Name,
+                LocationId = location.Id,
+                Orders = ConvertOrdersToViewModel(orders),
+                Inventory = ConvertInventoryToViewModel(inventory)
+            };
+        }
     }
 }

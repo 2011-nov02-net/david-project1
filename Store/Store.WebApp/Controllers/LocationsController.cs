@@ -32,19 +32,8 @@ namespace Store.WebApp.Controllers
         {
             var location = _locationRepository.GetWithInventory(id);
             var orders = _orderRepository.GetByLocationId(id);
-            // convert all the orders to a orderViewModel
-            var orderVM = Helpers.Helpers.ConvertOrdersToViewModel(orders);
-            // convert all the inventories to inventoryViewModel
-            var inventoryVM = Helpers.Helpers.ConvertInventoryToViewModel(location.LocationInventory);
-
             // make the view model
-            var locationWithOrderAndInventoryDetail = new LocationWithOrderAndInventoryViewModel()
-            {
-                Name = location.Name,
-                LocationId = location.Id,
-                Orders = orderVM,
-                Inventory = inventoryVM
-            };
+            var locationWithOrderAndInventoryDetail = Helpers.Helpers.ConvertLocationToViewModel(location, location.LocationInventory, orders);
             return View(locationWithOrderAndInventoryDetail);
         }
 
