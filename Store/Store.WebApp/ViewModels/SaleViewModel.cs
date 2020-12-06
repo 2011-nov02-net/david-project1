@@ -16,5 +16,6 @@ namespace Store.WebApp.ViewModels
         public decimal PurchasePrice { get; set; }
         [Display(Name = "Quantity Purchased")]
         public int Quantity { get; set; }
+        public int Id { get; set; }
     }
 }

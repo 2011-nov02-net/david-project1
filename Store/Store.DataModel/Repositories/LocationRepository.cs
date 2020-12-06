@@ -61,5 +61,18 @@ namespace Store.DataModel.Repositories
             // save changes
             _context.SaveChanges();
         }
+
+        public void UpdateInventoryAfterOrder(int id, IEnumerable<Library.Sale> sales)
+        {
+            var dbLoc = _context.Locations.Include(l => l.Inventories).ThenInclude(i => i.Product).FirstOrDefault(l => l.Id == id);
+
+            foreach (var sale in sales)
+            {
+                var item = dbLoc.Inventories.First(i => i.ProductId == sale.ProductId);
+                item.Quantity -= sale.SaleQuantity;
+                _context.Update(item);
+            }
+            _context.SaveChanges();
+        }
     }
 }

@@ -46,6 +46,18 @@ namespace Store.WebApp.Controllers
             return View(customerWithOrderDetail);
         }
 
+        // GET: Customer/Select/5
+        public ActionResult Select(int id)
+        {
+            // get the customer
+            var customer = _customerRepository.Get(id);
+            // store the customer name and id in temp data
+            TempData["CustomerName"] = customer.FirstName + " " + customer.LastName;
+            TempData["CustomerId"] = customer.Id;
+            // return to index view
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Customers/Create
         public ActionResult Create()
         {
