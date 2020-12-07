@@ -23,6 +23,41 @@ stages:
 
     variables:
       buildConfiguration: 'Release'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 5 SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '5.0.100'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
+      workingDirectory: Store/
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Tests'
+      inputs:
+        command: 'test'
+        arguments: '--configuration $(buildConfiguration)'
+        publishTestResults: true
+        workingDirectory: 'Store'
+
+    - script: dotnet publish --configuration $(buildConfiguration) --output publish
+      displayName: 'dotnet publish $(buildConfiguration)'
+      workingDirectory: Store/
+      
+    - publish: Store/publish
+      artifact: app
+      displayName: Publish Artifact App
+
+- stage: sonarcloud
+  jobs: 
+  - job: testing
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    variables:
+      buildConfiguration: 'Release'
 
     steps:
     - task: UseDotNet@2
@@ -40,18 +75,22 @@ stages:
         scannerMode: 'MSBuild'
         projectKey: '2011-nov02-net_david-project1'
         projectName: 'Project 1'
-        extraProperties: 'sonar.exclusions=**/lib/**'
-
-    - task: UseDotNet@2
-      displayName: 'Use .NET 5 SDK'
-      inputs:
-        packageType: 'sdk'
-        version: '5.0.100'
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+        extraProperties: |
+          'sonar.exclusions=**/lib/**'
+          'sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)\**\*.trx'
+          'sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)\**\*.coveragexml'
 
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
       workingDirectory: Store/
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Tests'
+      inputs:
+        command: 'test'
+        arguments: '--configuration $(buildConfiguration) --collect "Code Coverage"'
+        publishTestResults: true
+        workingDirectory: 'Store'
 
     - task: SonarCloudAnalyze@1
       displayName: Sonar Run Analysis
@@ -61,21 +100,6 @@ stages:
       inputs:
         pollingTimeoutSec: '300'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Run Tests'
-      inputs:
-        command: 'test'
-        arguments: '--configuration $(buildConfiguration)'
-        publishTestResults: true
-        workingDirectory: 'Store'
-
-    - script: dotnet publish --configuration $(buildConfiguration) --output publish
-      displayName: 'dotnet publish $(buildConfiguration)'
-      workingDirectory: Store/
-      
-    - publish: Store/publish
-      artifact: app
-      displayName: Publish Artifact App
 
 - stage: release
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
