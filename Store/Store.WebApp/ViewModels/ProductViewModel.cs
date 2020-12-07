@@ -15,8 +15,9 @@ namespace Store.WebApp.ViewModels
         [Display(Name = "Product Description")]
         [Required, RegularExpression("[A-Z].*")]
         public string Description { get; set; }
-        [Display(Name = "Product Name")]
+        [Display(Name = "Price")]
         [Required, Range(0.01, 9999999999999999.99)]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
         [Display(Name = "Order Limit of Item")]
         [Required, Range(1, 9999999999999999)]
