@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Store.Library.Repository_Interfaces;
 using Store.WebApp.ViewModels;
+using Store.Library;
 
 namespace Store.WebApp.Controllers
 {
@@ -13,11 +14,13 @@ namespace Store.WebApp.Controllers
     {
         private readonly ILocationRepository _locationRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
-        public LocationsController(ILocationRepository locationRepository, IOrderRepository orderRepository)
+        public LocationsController(ILocationRepository locationRepository, IOrderRepository orderRepository, IProductRepository productRepository)
         {
             _locationRepository = locationRepository;
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         // GET: Locations
@@ -129,6 +132,50 @@ namespace Store.WebApp.Controllers
             // add the id to temp data for security
             TempData["Location"] = id;
             return View();
+        }
+
+        // POST: Locations/Add/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(int id, [Bind("ProductName,Description,Price,OrderLimit,Quantity")] ProductViewModel productVM, IFormCollection collection)
+        {
+            // get the current id from tempdata to ensure the user hasn't modified the id that the page put out
+            int tdId = (int)TempData.Peek("Location");
+            if (tdId != id)
+            {
+                // *ER add error message
+                return RedirectToAction(nameof(Index));
+            }
+
+            // check modelstate
+            if (!ModelState.IsValid)
+            {
+                return View(productVM);
+            }
+
+            try
+            {
+                // check to see if product with name exists
+                if (_productRepository.Exists(productVM.ProductName))
+                {
+                    // is an existing product in the database, update it (should i do this here? This is going to update for all stores)
+                    Product product = new Product(productVM.ProductName, 1, productVM.Price, productVM.Description, productVM.OrderLimit);
+                    _productRepository.UpdateProduct(product);
+                    _locationRepository.AddInventory(product.Name, id, productVM.Quantity);
+                }
+                else
+                {
+                    // is a new product
+                    Product product = new Product(productVM.ProductName, 1, productVM.Price, productVM.Description, productVM.OrderLimit);
+                    _productRepository.Add(product);
+                    _locationRepository.AddInventory(product.Name, id, productVM.Quantity);
+                }
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch
+            {
+                return View(productVM);
+            }
         }
     }
 }
