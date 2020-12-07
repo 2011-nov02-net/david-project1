@@ -115,11 +115,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderLimit)
                 </td>
+                <td>
+                    @Html.ActionLink("Add", "Add", "Locations", new { id = Model.LocationId, name = item.Name })
+                </td>
             </tr>
 }
         </tbody>
     </table>
 }
+</div>
+<div>
+    @Html.ActionLink("Add Product", "Add", new { id = Model.LocationId })
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.LocationId }) |

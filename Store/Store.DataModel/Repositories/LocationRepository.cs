@@ -15,6 +15,35 @@ namespace Store.DataModel.Repositories
         {
             _context = context;
         }
+
+        public void AddInventory(string productName, int locationId, int quantity)
+        {
+            // get the location iventories with all the product details
+            var dbLocation = _context.Locations
+                .Include(l => l.Inventories).ThenInclude(i => i.Product)
+                .FirstOrDefault(l => l.Id == locationId).Inventories.FirstOrDefault(i => i.Product.Name == productName);
+            if(dbLocation == null)
+            {
+                // means the store doesn't have this item in its inventory
+                var location = _context.Locations.First(l => l.Id == locationId);
+                var product = _context.Products.First(p => p.Name == productName);
+                location.Inventories.Add(new Inventory() 
+                { 
+                    ProductId = product.Id,
+                    LocationId = locationId,
+                    Quantity = 0
+                });
+                _context.Update(location);
+                _context.SaveChanges();
+                dbLocation = _context.Locations
+                .Include(l => l.Inventories).ThenInclude(i => i.Product)
+                .FirstOrDefault(l => l.Id == locationId).Inventories.FirstOrDefault(i => i.Product.Name == productName);
+            }
+            dbLocation.Quantity += quantity;
+            _context.Update(dbLocation);
+            _context.SaveChanges();
+        }
+
         public void Create(Library.Location location)
         {
             var loc = new Location() { Name = location.Name };

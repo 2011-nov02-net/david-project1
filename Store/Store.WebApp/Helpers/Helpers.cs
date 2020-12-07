@@ -67,5 +67,16 @@ namespace Store.WebApp.Helpers
         {
             return sales.Select(s => new Sale(s.Id, s.ProductName, s.PurchasePrice, s.Quantity)).ToList();
         }
+
+        internal static ProductViewModel ConvertProductToViewModel(Product product)
+        {
+            return new ProductViewModel() 
+            { 
+                ProductName = product.Name,
+                Description = product.Description,
+                OrderLimit = product.OrderLimit,
+                Price = product.Price
+            };
+        }
     }
 }
