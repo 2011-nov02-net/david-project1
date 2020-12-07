@@ -26,5 +26,19 @@ namespace Store.DataModel.Repositories
 
             return new Library.Product(dbProduct.Name, dbProduct.Id, dbProduct.Price, dbProduct.Description, dbProduct.OrderLimit);
         }
+
+        public void UpdateProduct(Library.Product product)
+        {
+            // get existing product
+            var dbProduct = _context.Products.First(p => p.Name == product.Name);
+
+            // update the entries except the name and id
+            dbProduct.Description = product.Description;
+            dbProduct.Price = product.Price;
+            dbProduct.OrderLimit = product.OrderLimit;
+
+            _context.Update(dbProduct);
+            _context.SaveChanges();
+        }
     }
 }

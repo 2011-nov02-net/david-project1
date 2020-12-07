@@ -8,5 +8,6 @@ namespace Store.Library.Repository_Interfaces
     {
         public Product Get(string name);
         public bool Exists(string name);
+        public void UpdateProduct(Product product);
     }
 }
