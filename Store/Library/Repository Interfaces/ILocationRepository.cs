@@ -12,5 +12,7 @@ namespace Store.Library.Repository_Interfaces
         Location Get(int id);
         void Create(Location location);
         void Update(Location location);
+        void UpdateInventoryAfterOrder(int id, IEnumerable<Sale> sales);
+        void AddInventory(string productName, int locationId, int quantity);
     }
 }

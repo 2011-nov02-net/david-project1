@@ -22,9 +22,20 @@ namespace Store.WebApp.Controllers
             _orderRepository = orderRepository;
         }
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(string firstNameSearch, string lastNameSearch)
         {
             var customers = _customerRepository.GetAll();
+            if(!String.IsNullOrEmpty(firstNameSearch))
+            {
+                // filter by first name
+                customers = customers.Where(c => c.FirstName == firstNameSearch);
+            }
+            if(!String.IsNullOrEmpty(lastNameSearch))
+            {
+                // filter by last name
+                customers = customers.Where(c => c.LastName == lastNameSearch);
+            }
+            
             return View(customers);
         }
 
@@ -44,6 +55,18 @@ namespace Store.WebApp.Controllers
                 Orders = orderVM
             };
             return View(customerWithOrderDetail);
+        }
+
+        // GET: Customer/Select/5
+        public ActionResult Select(int id)
+        {
+            // get the customer
+            var customer = _customerRepository.Get(id);
+            // store the customer name and id in temp data
+            TempData["CustomerName"] = customer.FirstName + " " + customer.LastName;
+            TempData["CustomerId"] = customer.Id;
+            // return to index view
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Customers/Create

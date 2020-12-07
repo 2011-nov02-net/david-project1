@@ -9,6 +9,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div>
+    <form asp-action="Index" method="get">
+        <label for="firstNameSearch">First Name</label>
+        <input name="firstNameSearch" id="firstNameSearch" type="text" />
+        <label for="lastNameSearch">Last Name</label>
+        <input name="lastNameSearch" id="lastNameSearch" type="text" />
+        <input type="submit" />
+    </form>
+</div>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -18,7 +28,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +44,8 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Select", "Select", new { id = item.Id })
             </td>
         </tr>
 }

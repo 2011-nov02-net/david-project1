@@ -16,9 +16,29 @@ namespace Store.DataModel.Repositories
             _context = context;
         }
 
-        public void Create(Library.Customer customer, List<Library.Sale> sales)
+        public void Create(int customerId, int locationId, List<Library.Sale> sales)
         {
-            throw new NotImplementedException();
+            decimal total = sales.Sum(s => s.PurchasePrice * s.SaleQuantity);
+            // convert sales to db model
+            var dbSales = sales.Select(s => new Sale() 
+            {
+                ProductId = s.ProductId,
+                ProductName = s.ProductName,
+                PurchasePrice = s.PurchasePrice,
+                Quantity = s.SaleQuantity
+            }).ToList();
+
+            var dbOrder = new Order()
+            {
+                CustomerId = customerId,
+                LocationId = locationId,
+                Date = DateTime.Now,
+                OrderTotal = total,
+                Sales = dbSales
+            };
+
+            _context.Add(dbOrder);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Library.Order> GetByCustomerId(int id)

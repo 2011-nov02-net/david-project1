@@ -13,6 +13,8 @@ namespace Store.WebApp.ViewModels
         [Display(Name = "Customer")]
         public int CustomerId { get; set; }
         public DateTime Date { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal OrderTotal { get; set; }
         public int OrderNumber { get; set; }
         public List<SaleViewModel> Sales { get; set; }
