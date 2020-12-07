@@ -15,6 +15,11 @@ namespace Store.DataModel.Repositories
             _context = context;
         }
 
+        public bool Exists(string name)
+        {
+            return _context.Products.All(p => p.Name == name);
+        }
+
         public Library.Product Get(string name)
         {
             var dbProduct = _context.Products.FirstOrDefault(p => p.Name == name);
