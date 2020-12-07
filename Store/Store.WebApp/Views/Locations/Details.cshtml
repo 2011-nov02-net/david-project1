@@ -115,6 +115,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderLimit)
                 </td>
+                <td>
+                    @Html.ActionLink("Add", "Add", "Locations", new { id = Model.LocationId, name = item.Name })
+                </td>
             </tr>
 }
         </tbody>

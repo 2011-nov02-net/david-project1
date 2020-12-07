@@ -126,11 +126,19 @@ namespace Store.WebApp.Controllers
             }
         }
 
-        // GET: Locations/Add/5
+        // GET: Locations/Add/5?name=item
         public ActionResult Add(int id)
         {
             // add the id to temp data for security
             TempData["Location"] = id;
+            string productName = Request.Query["Name"];
+            if (productName != null)
+            {
+                var product = _productRepository.Get(productName);
+                // convert to view method
+                var productVM = Helpers.Helpers.ConvertProductToViewModel(product);
+                return View(productVM);
+            }
             return View();
         }
 
