@@ -79,6 +79,12 @@ stages:
           'sonar.exclusions=**/lib/**'
           'sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)\**\*.trx'
           'sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)\**\*.coveragexml'
+    - task: UseDotNet@2
+      displayName: 'Use .NET 5 SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '5.0.100'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
