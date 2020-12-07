@@ -21,5 +21,8 @@ namespace Store.WebApp.ViewModels
         [Display(Name = "Order Limit of Item")]
         [Required, Range(1, 9999999999999999)]
         public int OrderLimit { get; set; }
+        [Display(Name = "Quantity to Add")]
+        [Required, Range(1, 9999999999999999)]
+        public int Quantity { get; set; }
     }
 }
