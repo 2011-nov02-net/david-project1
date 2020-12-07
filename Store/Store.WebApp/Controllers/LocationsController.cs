@@ -122,5 +122,13 @@ namespace Store.WebApp.Controllers
                 return View();
             }
         }
+
+        // GET: Locations/Add/5
+        public ActionResult Add(int id)
+        {
+            // add the id to temp data for security
+            TempData["Location"] = id;
+            return View();
+        }
     }
 }
