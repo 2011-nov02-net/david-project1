@@ -122,6 +122,9 @@
 }
 </div>
 <div>
+    @Html.ActionLink("Add Product", "Add", new { id = Model.LocationId })
+</div>
+<div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.LocationId }) |
     <a asp-action="Index">Back to List</a>
 </div>
