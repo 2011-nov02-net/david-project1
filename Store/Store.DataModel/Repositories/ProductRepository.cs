@@ -15,9 +15,23 @@ namespace Store.DataModel.Repositories
             _context = context;
         }
 
+        public void Add(Library.Product product)
+        {
+            Product dbProduct = new Product()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                OrderLimit = product.OrderLimit
+            };
+
+            _context.Add(dbProduct);
+            _context.SaveChanges();
+        }
+
         public bool Exists(string name)
         {
-            return _context.Products.All(p => p.Name == name);
+            return _context.Products.Any(p => p.Name == name);
         }
 
         public Library.Product Get(string name)
