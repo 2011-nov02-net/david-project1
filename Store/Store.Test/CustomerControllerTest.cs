@@ -30,7 +30,7 @@ namespace Store.Test
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Customer>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<CustomerViewModel>>(viewResult.ViewData.Model);
             Assert.Equal(2, model.Count());
         }
 
@@ -50,7 +50,7 @@ namespace Store.Test
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Customer>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<CustomerViewModel>>(viewResult.ViewData.Model);
             var customer = model.First();
             Assert.Single(model);
             Assert.Equal(firstName, customer.FirstName);
@@ -72,7 +72,7 @@ namespace Store.Test
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Customer>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<CustomerViewModel>>(viewResult.ViewData.Model);
             var customer = model.First();
             Assert.Single(model);
             Assert.Equal(lastName, customer.LastName);
