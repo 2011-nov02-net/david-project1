@@ -78,7 +78,7 @@ stages:
         projectKey: '2011-nov02-net_david-project1'
         projectName: 'Project 1'
         extraProperties: |
-          'sonar.exclusions=**/lib/**'
+          sonar.exclusions=**/lib/**
           sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
     - task: UseDotNet@2
