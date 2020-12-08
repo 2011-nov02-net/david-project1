@@ -77,8 +77,7 @@ stages:
         projectName: 'Project 1'
         extraProperties: |
           'sonar.exclusions=**/lib/**'
-          'sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)\**\*.trx'
-          'sonar.cs.vscoveragexml.reportsPaths=$(Agent.TempDirectory)\**\*.coveragexml'
+          'sonar.cs.xunit.reportsPaths=$(Agent.TempDirectory)\**\*.xml'
     - task: UseDotNet@2
       displayName: 'Use .NET 5 SDK'
       inputs:
@@ -94,7 +93,7 @@ stages:
       displayName: 'Run Tests'
       inputs:
         command: 'test'
-        arguments: '--configuration $(buildConfiguration) --collect "Code Coverage"'
+        arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
         publishTestResults: true
         workingDirectory: 'Store'
 
