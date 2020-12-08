@@ -15,7 +15,9 @@ namespace Store.WebApp.ViewModels
         public DateTime Date { get; set; }
 
         [DataType(DataType.Currency)]
+        [Display(Name = "Order Total")]
         public decimal OrderTotal { get; set; }
+        [Display(Name = "Order Number")]
         public int OrderNumber { get; set; }
         public List<SaleViewModel> Sales { get; set; }
     }

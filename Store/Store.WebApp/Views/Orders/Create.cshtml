@@ -4,14 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>LocationWithOrderAndInventoryViewModel</h4>
+<h1>Create Order</h1>
 <hr />
 <div>
     @if (Model.Inventory.Count > 0)
     {
-        <h5>Location Inventory</h5>
+        <h5>@Html.DisplayFor(model => model.Name)</h5>
         <hr />
         <table class="table">
             <thead>

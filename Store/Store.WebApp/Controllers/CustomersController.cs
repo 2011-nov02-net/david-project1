@@ -35,8 +35,17 @@ namespace Store.WebApp.Controllers
                 // filter by last name
                 customers = customers.Where(c => c.LastName == lastNameSearch);
             }
+
+            //convert to customer View Model
+
+            var customersVM = customers.Select(c => new CustomerViewModel() 
+            {
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                Id = c.Id
+            }).ToList();
             
-            return View(customers);
+            return View(customersVM);
         }
 
         // GET: Customers/Details/5
