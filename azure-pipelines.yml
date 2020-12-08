@@ -94,7 +94,7 @@ stages:
       displayName: 'Run Tests'
       inputs:
         command: 'test'
-        arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+        arguments: '--configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
         publishTestResults: true
         workingDirectory: 'Store'
 
