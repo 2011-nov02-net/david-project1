@@ -66,6 +66,9 @@ stages:
         packageType: 'sdk'
         version: '2.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
+    
+    - script: 'dotnet add package coverlet.msbuild'
+      workingDirectory: Store/Store.Test
 
     - task: SonarCloudPrepare@1
       displayName: Sonar Prepare Analysis
