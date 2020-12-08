@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Store.Library.Customer>
+﻿@model IEnumerable<Store.WebApp.ViewModels.CustomerViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-light">Create New</a>
 </p>
 <div>
     <form asp-action="Index" method="get">
@@ -27,6 +27,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
             </th>
         </tr>
     </thead>

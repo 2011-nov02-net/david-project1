@@ -12,6 +12,7 @@ namespace Store.WebApp.ViewModels
         public int Id { get; set; }
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+        [Display(Name = "Order Limit")]
         public int OrderLimit { get; set; }
         public int Quantity { get; set; }
         public string Description { get; set; }
