@@ -7,17 +7,17 @@ This is my ASP.NET Core application that allows for users to view and order prod
 
 Technologies Used:
 
-ASP.NET Core 5.0
-Entity Framework Core 5.0
-SQL Server
-Azure Cloud Services
+- ASP.NET Core 5.0
+- Entity Framework Core 5.0
+- SQL Server
+- Azure Cloud Services
   - App Service
   - SQL Server
-Xunit 2.4
-Moq 4.15
-Azure DevOps Pipeline
-SonarCloud
-BootStrap 4.5
+- Xunit 2.4
+- Moq 4.15
+- Azure DevOps Pipeline
+- SonarCloud
+- BootStrap 4.5
 
 Features:
 
@@ -51,7 +51,7 @@ On command line
 
 Usage:
 
-Customer usage
+- Customer usage
   - Click on customer tab
   - Create new customer with New Customer link
   - Or select customer from list
@@ -62,7 +62,7 @@ Customer usage
   - In place order screen, select item from drop down, add quantity desires and click add to order
   - When all products that are desired in list, click place order to finalize the order
 
-Admin usage
+- Admin usage
   - Click on Store tab
   - Click on details for the store you wish to view
   - From there you can view all orders placed at that store and the amounts
