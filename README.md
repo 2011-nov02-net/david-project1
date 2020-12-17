@@ -1,3 +1,6 @@
+Project Requirments:
+https://github.com/2011-nov02-net/trainer-code/wiki/Project-1-requirements
+
 Store Web App
 
 This is my ASP.NET Core application that allows for users to view and order products from a store location with correct removal of stock from the location.  It also allows for viewing of all orders by a particular customer and all orders placed at a particular store.  Lastly, it all allows for the admin to add stock to existing products and add new products to store inventories.
